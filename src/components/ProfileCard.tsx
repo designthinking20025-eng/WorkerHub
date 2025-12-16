@@ -22,19 +22,24 @@ export function ProfileCard({ profile, skills, onClick }: ProfileCardProps) {
 
   return (
     <div
-      className="rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-102 cursor-pointer overflow-hidden"
-      style={{ backgroundColor: 'white' }}
+      className="rounded-2xl shadow-lg hover:shadow-2xl card-hover cursor-pointer overflow-hidden animate-slide-up bg-white backdrop-blur-sm"
       onClick={onClick}
     >
       <div
-        className="h-32 relative"
+        className="h-36 relative overflow-hidden"
         style={{
-          background: 'linear-gradient(135deg, #F4A261 0%, #E9C46A 100%)',
+          background: 'linear-gradient(135deg, #F4A261 0%, #E76F51 50%, #E9C46A 100%)',
+          backgroundSize: '200% 200%',
+          animation: 'gradientShift 15s ease infinite',
         }}
       >
-        <div className="absolute -bottom-12 left-6">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-4 right-4 w-32 h-32 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-white rounded-full blur-2xl"></div>
+        </div>
+        <div className="absolute -bottom-14 left-6">
           <div
-            className="w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold shadow-lg ring-4"
+            className="w-28 h-28 rounded-full flex items-center justify-center text-3xl font-bold shadow-xl ring-4 transition-transform hover:scale-105"
             style={{
               backgroundColor: '#2A9D8F',
               color: 'white',
@@ -54,7 +59,7 @@ export function ProfileCard({ profile, skills, onClick }: ProfileCardProps) {
         </div>
       </div>
 
-      <div className="pt-16 pb-6 px-6">
+      <div className="pt-20 pb-6 px-6">
         <div className="mb-4">
           <h3
             className="text-2xl font-bold mb-1"
@@ -119,18 +124,18 @@ export function ProfileCard({ profile, skills, onClick }: ProfileCardProps) {
           </div>
         </div>
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4" style={{ color: '#2A9D8F' }} />
+        <div className="flex items-center justify-between pt-4 border-t" style={{ borderColor: '#FFF7EA' }}>
+          <div className="flex items-center gap-2 px-3 py-2 rounded-lg" style={{ backgroundColor: profile.availability === 'Available' ? '#E8F5F3' : '#FFF3E0' }}>
+            <Clock className="w-4 h-4" style={{ color: profile.availability === 'Available' ? '#2A9D8F' : '#F4A261' }} />
             <span
-              className="text-sm font-medium"
+              className="text-sm font-semibold"
               style={{ color: profile.availability === 'Available' ? '#2A9D8F' : '#F4A261' }}
             >
               {profile.availability === 'Available' ? t.available : t.busy}
             </span>
           </div>
           <button
-            className="px-4 py-2 rounded-lg font-medium text-white hover:opacity-90 transition-opacity"
+            className="px-5 py-2.5 rounded-lg font-semibold text-white btn-primary shadow-md"
             style={{ backgroundColor: '#F4A261' }}
           >
             {t.viewProfile}

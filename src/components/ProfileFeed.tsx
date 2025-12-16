@@ -88,20 +88,20 @@ export function ProfileFeed() {
   }
 
   return (
-    <div>
-      <div className="mb-8">
-        <div className="max-w-2xl mx-auto">
-          <div className="relative">
+    <div className="animate-fade-in">
+      <div className="mb-10">
+        <div className="max-w-3xl mx-auto">
+          <div className="relative group">
             <Search
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5"
-              style={{ color: '#3E3A37' }}
+              className="absolute left-5 top-1/2 transform -translate-y-1/2 w-6 h-6 transition-all group-focus-within:scale-110"
+              style={{ color: '#F4A261' }}
             />
             <input
               type="text"
               placeholder={t.searchProfiles}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-4 rounded-xl border-2 focus:outline-none focus:border-current text-lg"
+              className="w-full pl-14 pr-6 py-5 rounded-2xl border-2 focus:outline-none text-lg shadow-lg transition-all focus:shadow-xl"
               style={{
                 backgroundColor: 'white',
                 borderColor: '#E9C46A',
@@ -112,19 +112,21 @@ export function ProfileFeed() {
         </div>
       </div>
 
-      <div className="mb-6">
-        <h2
-          className="text-3xl font-bold"
-          style={{ color: '#3E3A37' }}
-        >
-          {t.availableWorkers}
-        </h2>
-        <p
-          className="text-lg mt-1"
-          style={{ color: '#2A9D8F' }}
-        >
-          {filteredProfiles.length} {t.profiles.toLowerCase()}
-        </p>
+      <div className="mb-8">
+        <div className="flex items-baseline gap-3">
+          <h2
+            className="text-4xl font-bold"
+            style={{ color: '#3E3A37' }}
+          >
+            {t.availableWorkers}
+          </h2>
+          <div
+            className="px-4 py-1.5 rounded-full font-semibold text-sm"
+            style={{ backgroundColor: '#E8F5F3', color: '#2A9D8F' }}
+          >
+            {filteredProfiles.length} {t.profiles.toLowerCase()}
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
