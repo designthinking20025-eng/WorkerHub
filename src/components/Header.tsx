@@ -14,8 +14,10 @@ export function Header() {
   const handleLogout = async () => {
     try {
       await signOut();
+      window.location.reload();
     } catch (error) {
       console.error('Error logging out:', error);
+      alert('There was an issue logging out. Please try again.');
     }
   };
 
