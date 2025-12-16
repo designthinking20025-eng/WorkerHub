@@ -82,7 +82,7 @@ export function ProfileFeed() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="w-12 h-12 animate-spin" style={{ color: '#F4A261' }} />
+        <Loader2 className="w-12 h-12 animate-spin" style={{ color: '#D4A574' }} />
       </div>
     );
   }
@@ -94,7 +94,7 @@ export function ProfileFeed() {
           <div className="relative group">
             <Search
               className="absolute left-5 top-1/2 transform -translate-y-1/2 w-6 h-6 transition-all group-focus-within:scale-110"
-              style={{ color: '#F4A261' }}
+              style={{ color: '#D4A574' }}
             />
             <input
               type="text"
@@ -104,8 +104,8 @@ export function ProfileFeed() {
               className="w-full pl-14 pr-6 py-5 rounded-2xl border-2 focus:outline-none text-lg shadow-lg transition-all focus:shadow-xl"
               style={{
                 backgroundColor: 'white',
-                borderColor: '#E9C46A',
-                color: '#3E3A37',
+                borderColor: '#E8C89F',
+                color: '#2C2416',
               }}
             />
           </div>
@@ -116,13 +116,13 @@ export function ProfileFeed() {
         <div className="flex items-baseline gap-3">
           <h2
             className="text-4xl font-bold"
-            style={{ color: '#3E3A37' }}
+            style={{ color: '#2C2416' }}
           >
             {t.availableWorkers}
           </h2>
           <div
             className="px-4 py-1.5 rounded-full font-semibold text-sm"
-            style={{ backgroundColor: '#E8F5F3', color: '#2A9D8F' }}
+            style={{ backgroundColor: '#FFF8F0', color: '#B8874B' }}
           >
             {filteredProfiles.length} {t.profiles.toLowerCase()}
           </div>

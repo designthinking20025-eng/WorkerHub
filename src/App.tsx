@@ -19,17 +19,17 @@ function App() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#FFF7EA' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#FFF8F0' }}>
         <div className="text-center animate-fade-in">
           <div
             className="w-20 h-20 rounded-full animate-spin border-4 mx-auto mb-6"
             style={{
-              borderColor: '#E9C46A',
-              borderTopColor: '#F4A261',
+              borderColor: '#E8C89F',
+              borderTopColor: '#D4A574',
               borderWidth: '4px',
             }}
           ></div>
-          <p className="text-xl font-semibold" style={{ color: '#3E3A37' }}>Loading...</p>
+          <p className="text-xl font-semibold" style={{ color: '#2C2416' }}>Loading...</p>
         </div>
       </div>
     );
@@ -64,7 +64,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#FFF7EA' }}>
+    <div className="min-h-screen" style={{ backgroundColor: '#FFF8F0' }}>
       <Header />
       <main className="max-w-7xl mx-auto px-6 py-10">
         <ProfileFeed />
