@@ -9,7 +9,7 @@ import { ProfileFeed } from './components/ProfileFeed';
 
 function App() {
   const { isLanguageSelected } = useLanguage();
-  const { session, loading: authLoading } = useAuth();
+  const { session, loading: authLoading, user } = useAuth();
   const [currentStep, setCurrentStep] = useState<'choice' | 'auth'>('choice');
   const [selectedUserType, setSelectedUserType] = useState<UserType>(null);
 
@@ -34,6 +34,8 @@ function App() {
       </div>
     );
   }
+
+  console.log('App state:', { session: !!session, user: !!user, currentStep });
 
   if (!session) {
     if (currentStep === 'choice') {
