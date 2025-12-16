@@ -33,48 +33,93 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let mounted = true;
+
+    const timeoutId = setTimeout(() => {
+      if (mounted && loading) {
+        console.warn('Auth loading timeout - forcing loading to false');
+        setLoading(false);
+      }
+    }, 10000);
+
     const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setSession(session);
+      try {
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
 
-      if (session?.user) {
-        const { data: profile } = await supabase
-          .from('user_profiles')
-          .select('*')
-          .eq('id', session.user.id)
-          .maybeSingle();
+        if (!mounted) return;
 
-        if (profile) {
-          setUser(profile as UserProfile);
-          setUserType(profile.user_type);
+        if (sessionError) {
+          console.error('Error getting session:', sessionError);
+          setLoading(false);
+          return;
+        }
+
+        setSession(session);
+
+        if (session?.user) {
+          const { data: profile, error: profileError } = await supabase
+            .from('user_profiles')
+            .select('*')
+            .eq('id', session.user.id)
+            .maybeSingle();
+
+          if (!mounted) return;
+
+          if (profileError) {
+            console.error('Error fetching profile:', profileError);
+          } else if (profile) {
+            setUser(profile as UserProfile);
+            setUserType(profile.user_type);
+          }
+        }
+      } catch (error) {
+        console.error('Unexpected error in getSession:', error);
+      } finally {
+        if (mounted) {
+          setLoading(false);
         }
       }
-      setLoading(false);
     };
 
     getSession();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, newSession) => {
-      setSession(newSession);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, newSession) => {
+      (async () => {
+        try {
+          if (!mounted) return;
 
-      if (newSession?.user) {
-        const { data: profile } = await supabase
-          .from('user_profiles')
-          .select('*')
-          .eq('id', newSession.user.id)
-          .maybeSingle();
+          setSession(newSession);
 
-        if (profile) {
-          setUser(profile as UserProfile);
-          setUserType(profile.user_type);
+          if (newSession?.user) {
+            const { data: profile, error: profileError } = await supabase
+              .from('user_profiles')
+              .select('*')
+              .eq('id', newSession.user.id)
+              .maybeSingle();
+
+            if (!mounted) return;
+
+            if (profileError) {
+              console.error('Error fetching profile on auth change:', profileError);
+            } else if (profile) {
+              setUser(profile as UserProfile);
+              setUserType(profile.user_type);
+            }
+          } else {
+            setUser(null);
+            setUserType(null);
+          }
+        } catch (error) {
+          console.error('Unexpected error in onAuthStateChange:', error);
         }
-      } else {
-        setUser(null);
-        setUserType(null);
-      }
+      })();
     });
 
-    return () => subscription?.unsubscribe();
+    return () => {
+      mounted = false;
+      clearTimeout(timeoutId);
+      subscription?.unsubscribe();
+    };
   }, []);
 
   const signUp = async (email: string, password: string, fullName: string, phone: string, type: UserType) => {
